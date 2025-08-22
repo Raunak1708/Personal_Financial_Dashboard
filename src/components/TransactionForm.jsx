@@ -3,23 +3,26 @@ import { useDispatch } from "react-redux";
 import { addTransaction } from "../features/transactions/transactionSlice";
 
 export default function TransactionForm() {
-  const [text, setText] = useState("");
+  const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [type, setType] = useState("income");
+  const [category,setcategory]=useState("")
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!text || !amount) return;
+    if (!description || !amount||!category) return;
 
     dispatch(addTransaction({
       id: Date.now(),
-      text,
+      description,
       amount: parseFloat(amount),
-      type
+      type,
+      date:new Date().toISOString(),
+      category
     }));
-
-    setText("");
+    setcategory("");
+    setDescription("");
     setAmount("");
     setType("income");
   };
@@ -29,8 +32,8 @@ export default function TransactionForm() {
       <input
         type="text"
         placeholder="Enter description"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
         className="border p-2 rounded"
       />
       <input
@@ -60,6 +63,24 @@ export default function TransactionForm() {
           Expense
         </label>
       </div>
+      <label className="block text-sm font-medium text-gray-700">Category</label>
+<select 
+  name="category"
+  value={category}
+  onChange={(e)=>setcategory(e.target.value)}
+  required
+  className="mt-1 block w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
+>
+  <option value="">Select Category</option>
+  <option value="salary">Salary 💼</option>
+  <option value="food">Food 🍔</option>
+  <option value="transport">Transport 🚕</option>
+  <option value="shopping">Shopping 🛒</option>
+  <option value="bills">Bills 💡</option>
+  <option value="entertainment">Entertainment 🎬</option>
+  <option value="other">Other 📦</option>
+</select>
+
       <button
         type="submit"
         className="bg-black text-white p-2 rounded"

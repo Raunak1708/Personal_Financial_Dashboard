@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
-import { selectTransactions, deleteTransaction } from "../features/transactions/transactionSlice";
+import { selectFilteredTransactions, deleteTransaction } from "../features/transactions/transactionSlice";
 import { format } from "date-fns";
 
 export default function TransactionList() {
-  const transactions = useSelector(selectTransactions);
+  const transactions = useSelector(selectFilteredTransactions);
   const dispatch = useDispatch();
 
   if (transactions.length === 0) {

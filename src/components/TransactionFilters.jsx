@@ -55,6 +55,7 @@ export default function TransactionFilters() {
         {/* Start Date */}
         <input
           type="date"
+          // placeholder="Start Date"
           value={filters.startDate ? filters.startDate.slice(0, 10) : ""}
           onChange={(e) =>
             dispatch(
